@@ -44,12 +44,30 @@ void cadastrarVeiculo() {
     Veiculo novoVeiculo = new Veiculo();
     novoVeiculo.setMarca(IO.readln("Marca do Veículo a ser cadastrado: ").trim());
     novoVeiculo.setModelo(IO.readln("Modelo do Veículo a ser cadastrado: ").trim());
+    
     novoVeiculo.setAno(Input.readInt("Ano do Veículo a ser cadastrado: "));
-    novoVeiculo.setPlaca(IO.readln("Placa do Veículo a ser cadastrado: ").trim());
 
+
+    while (true){
+        boolean existe = false;
+        String placasString = (IO.readln("Placa do Veículo a ser cadastrado: ").trim().toUpperCase());
+        for (int i = 0; i < veiculos.size(); i++){
+            String placa = veiculos.get(i).getPlaca();
+            if (placasString.equals(placa)){
+                existe = true;
+                IO.println("tem");
+                }
+            }
+        if (existe){
+            IO.println("\nPlaca Já Cadastrada!\n");;
+            } else {
+                novoVeiculo.setPlaca(placasString);
+                break; 
+            }
+        }
     veiculos.add(novoVeiculo);
+    }
 
-}
 
 void listarVeiculos() {
     IO.println("Veiculos Cadastrados");

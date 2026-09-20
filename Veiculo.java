@@ -1,4 +1,8 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class Veiculo {
 
@@ -6,21 +10,22 @@ public class Veiculo {
     private String modelo;
     private int ano;
     private String placa;
-
+    
+    
     // Método construtor = Possui o mesmo nome (identificador) que a classe
     //                     e não possui retorno
     /*Método construtor Default
         - Não possui parâmetros de entrada
         - Existe implicitamente em todas as classes 
-               SE E SOMENTE SE, não houver outro método construtor declarado
-    */
-    public Veiculo(){
+        SE E SOMENTE SE, não houver outro método construtor declarado
+        */
+       public Veiculo(){
 
     }
 
     /* Método Construtor
-        - Pode ser usado para inicializar os atributos com valores no momento da instanciação
-        - Pode realizar outras operções além da inicialização de atributos
+    - Pode ser usado para inicializar os atributos com valores no momento da instanciação
+    - Pode realizar outras operções além da inicialização de atributos
      */
     public Veiculo(String _marca, String modelo, int ano, String placa){
         this.marca = _marca;
@@ -28,17 +33,16 @@ public class Veiculo {
         this.ano = ano;
         this.placa = placa;
     }
-
-
+    
     public String getMarca() {
         return marca;
     }
 
     public void setMarca(String marca) {
         if (!marca.equalsIgnoreCase("Peugeot"))
-            this.marca = marca;
+            this.marca = marca.toUpperCase();
     }
-
+    
     public String getModelo() {
         return modelo;
     }
@@ -52,13 +56,19 @@ public class Veiculo {
     }
 
     public void setAno(int ano) {
+        while (true){
+            if (ano < 1900 || ano > (LocalDate.now().getYear() + 1)){
+                System.out.printf("\nO ano do veículo deve ser entre 1900 e %d \n", (LocalDate.now().getYear() + 1));
+                ano = Input.readInt("\nAno do veículo a ser cadastrado: ");
+            }else break;
+        }
         this.ano = ano;
     }
-
+    
     public String getPlaca() {
         return placa;
     }
-
+    
     public void setPlaca(String placa) {
         if (validaPlaca(placa))
             this.placa = placa;
@@ -72,7 +82,7 @@ public class Veiculo {
     public int calculaTempoUso(int anoBase){
         return anoBase - this.ano - 1;
     }
-
+    
     private boolean validaPlaca(String placa) {
         String regex = "^[A-Z]{3}-?[0-9]{4}|[A-Z]{3}[0-9][A-Z][0-9]{2}$";
         return placa.matches(regex);
