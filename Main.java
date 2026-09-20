@@ -47,26 +47,30 @@ void cadastrarVeiculo() {
     
     novoVeiculo.setAno(Input.readInt("Ano do Veículo a ser cadastrado: "));
 
-
-    while (true){
+    while (true) {
+        String placaString = (IO.readln("Placa do Veículo a ser cadastrado: ").trim().toUpperCase());
+        
         boolean existe = false;
-        String placasString = (IO.readln("Placa do Veículo a ser cadastrado: ").trim().toUpperCase());
-        for (int i = 0; i < veiculos.size(); i++){
-            String placa = veiculos.get(i).getPlaca();
-            if (placasString.equals(placa)){
+        for (int i = 0; i < veiculos.size(); i++) {
+            if (placaString.equals(veiculos.get(i).getPlaca())) {
                 existe = true;
-                IO.println("tem");
-                }
-            }
-        if (existe){
-            IO.println("\nPlaca Já Cadastrada!\n");;
-            } else {
-                novoVeiculo.setPlaca(placasString);
-                break; 
+                break;
             }
         }
-    veiculos.add(novoVeiculo);
+        
+        if (existe) {
+            IO.println("Placa já cadastrada! Digite uma placa diferente.\n");
+        } else {
+            novoVeiculo.setPlaca(placaString);  // setPlaca valida aqui
+            if (novoVeiculo.getPlaca() != null) {  // Se foi validada com sucesso
+                break;
+            }
+        }
     }
+    
+    veiculos.add(novoVeiculo);
+    IO.println("Veículo cadastrado com sucesso!\n");
+}
 
 
 void listarVeiculos() {
@@ -83,11 +87,11 @@ void listarVeiculos() {
 }
 
 void consultarVeiculo() {
-    String placa = IO.readln("Digite a placa que deseja consultar: ");
+    String placa = IO.readln("Digite a placa que deseja consultar: ").toUpperCase();
     for (int i = 0; i < veiculos.size(); i++) {
         placaCarro = veiculos.get(i).getPlaca();
         if (placaCarro.equals(placa)) {
-            System.out.printf("\nDados do veículo de placa: %s", placaCarro);
+            System.out.printf("\nDados do veículo de placa: %s\n", placaCarro);
             System.out.printf("Marca: %s | Modelo: %s | Ano: %d\n", veiculos.get(i).getMarca(),
                     veiculos.get(i).getModelo(), veiculos.get(i).getAno());
         } else

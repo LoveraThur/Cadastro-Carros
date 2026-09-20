@@ -72,6 +72,12 @@ public class Veiculo {
     public void setPlaca(String placa) {
         if (validaPlaca(placa))
             this.placa = placa;
+        else
+            System.out.println("Placa inválida! Use o formato: XXX-9999 ou XXX9X99");
+    }
+    
+    public boolean isPlacaValida(String placa) {
+        return validaPlaca(placa);
     }
 
     public int calculaTempoUso(){
